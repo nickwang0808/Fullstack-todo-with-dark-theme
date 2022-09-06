@@ -6,16 +6,24 @@ const StyledWrapper = styled.div`
   background-color: ${(props) => props.theme.cardBg};
 `;
 
-const StyledText = styled.div`
-  color: ${(props) => props.theme.primaryText};
+const StyledBaseText = styled.div`
+  color: ${(props) => props.theme.secondaryText};
+  cursor: pointer;
+`;
+
+const StyledText = styled(StyledBaseText)<{ active?: boolean }>`
+  &:hover {
+    color: ${({ theme, active }) => !active && theme.primaryText};
+  }
+  ${({ active }) => active && "color: blue"};
 `;
 
 const BottomActionBar = () => {
   return (
     <StyledWrapper>
-      <StyledText>5 item left</StyledText>
+      <StyledBaseText>5 item left</StyledBaseText>
       <StyledWrapper style={{ gap: 16 }}>
-        <StyledText>All</StyledText>
+        <StyledText active>All</StyledText>
         <StyledText>Active</StyledText>
         <StyledText>Completed</StyledText>
       </StyledWrapper>
