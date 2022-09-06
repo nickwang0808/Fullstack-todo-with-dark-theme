@@ -1,3 +1,4 @@
+import AddTodo from "./Components/AddTodo";
 import { Backdrop } from "./Components/Backdrop";
 import { Container } from "./Components/Container";
 import TitleRow from "./Components/TitleRow";
@@ -9,6 +10,7 @@ function App() {
     <Backdrop>
       <Container>
         <TitleRow />
+        <AddTodo />
         {todos.map(({ name, completed }) => {
           return (
             <Todo

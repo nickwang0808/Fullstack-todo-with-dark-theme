@@ -3,19 +3,21 @@ import styled from "styled-components";
 
 import { ReactComponent as Cross } from "../Assets/icon-cross.svg";
 
-const Wrapper = styled.div`
+const StyledWrapper = styled.div`
   display: flex;
   align-items: center;
   background-color: white;
+  gap: 16px;
+  border-bottom: 1px solid black;
 `;
 
-const CheckBox = styled.input`
+const StyledCheckbox = styled.input`
   accent-color: hsl(192, 100%, 67%);
 `;
 
-const TextBox = styled.input`
-  border: none;
-  outline: none;
+const StyledText = styled.div<{ strike: boolean }>`
+  flex: 1;
+  text-decoration: ${({ strike }) => strike && "line-through"};
 `;
 
 interface ItemProps {
@@ -32,22 +34,19 @@ const Todo: FC<ItemProps> = ({
   handleDelete,
 }) => {
   return (
-    <Wrapper>
-      <CheckBox
+    <StyledWrapper>
+      <StyledCheckbox
         type="checkbox"
         checked={completed}
         onChange={({ target }) => handleComplete(target.checked)}
       />
 
-      <div
-        data-testid="todo-item"
-        style={completed ? { textDecoration: "line-through" } : undefined}
-      >
+      <StyledText strike={completed} data-testid="todo-item">
         {value}
-      </div>
+      </StyledText>
 
       <Cross data-testid="icon-cross" onClick={handleDelete} />
-    </Wrapper>
+    </StyledWrapper>
   );
 };
 
