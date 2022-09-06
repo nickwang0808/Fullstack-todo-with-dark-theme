@@ -1,5 +1,6 @@
 import AddTodo from "./Components/AddTodo";
 import { Backdrop } from "./Components/Backdrop";
+import BottomActionBar from "./Components/BottomActionBar";
 import { Container } from "./Components/Container";
 import TitleRow from "./Components/TitleRow";
 import Todo from "./Components/Todo";
@@ -22,6 +23,7 @@ function App() {
             />
           );
         })}
+        <BottomActionBar />
       </Container>
     </Backdrop>
   );

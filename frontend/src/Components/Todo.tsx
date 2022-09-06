@@ -6,7 +6,7 @@ import { ReactComponent as Cross } from "../Assets/icon-cross.svg";
 const StyledWrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: white;
+  background-color: ${(props) => props.theme.cardBg};
   gap: 16px;
   border-bottom: 1px solid black;
 `;
@@ -18,6 +18,7 @@ const StyledCheckbox = styled.input`
 const StyledText = styled.div<{ strike: boolean }>`
   flex: 1;
   text-decoration: ${({ strike }) => strike && "line-through"};
+  color: ${(props) => props.theme.primaryText};
 `;
 
 interface ItemProps {

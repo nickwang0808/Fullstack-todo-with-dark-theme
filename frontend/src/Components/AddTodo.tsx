@@ -4,16 +4,17 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: white;
+  background-color: ${(props) => props.theme.cardBg};
+  gap: 16px;
 `;
 
-const CheckBox = styled.input`
-  accent-color: hsl(192, 100%, 67%);
-`;
+const CheckBox = styled.input``;
 
 const TextBox = styled.input`
   border: none;
   outline: none;
+  background-color: ${(props) => props.theme.cardBg};
+  color: ${(props) => props.theme.primaryText};
 `;
 
 const AddTodo: FC = () => {
