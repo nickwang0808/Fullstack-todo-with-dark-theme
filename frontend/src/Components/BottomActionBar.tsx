@@ -1,3 +1,4 @@
+import { FC } from "react";
 import styled from "styled-components";
 
 const StyledWrapper = styled.div`
@@ -21,16 +22,45 @@ const StyledText = styled(StyledBaseText)<{ active?: boolean }>`
   ${({ active }) => active && "color: blue"};
 `;
 
-const BottomActionBar = () => {
+type activeFilter = "all" | "active" | "completedd";
+interface BottomActionBarProps {
+  itemsCount: number;
+  activeFilter: activeFilter;
+  handleClickAll: () => void;
+  handleClickActive: () => void;
+  handleClickComplete: () => void;
+  handleClickClear: () => void;
+}
+
+const BottomActionBar: FC<BottomActionBarProps> = ({
+  itemsCount,
+  handleClickAll,
+  handleClickActive,
+  handleClickComplete,
+  handleClickClear,
+  activeFilter,
+}) => {
   return (
     <StyledWrapper>
-      <StyledBaseText>5 item left</StyledBaseText>
+      <StyledBaseText>{itemsCount} item left</StyledBaseText>
       <StyledWrapper style={{ gap: 16 }}>
-        <StyledText active>All</StyledText>
-        <StyledText>Active</StyledText>
-        <StyledText>Completed</StyledText>
+        <StyledText onClick={handleClickAll} active={activeFilter === "all"}>
+          All
+        </StyledText>
+        <StyledText
+          onClick={handleClickActive}
+          active={activeFilter === "active"}
+        >
+          Active
+        </StyledText>
+        <StyledText
+          onClick={handleClickComplete}
+          active={activeFilter === "completedd"}
+        >
+          Completed
+        </StyledText>
       </StyledWrapper>
-      <StyledText>Clear Completed</StyledText>
+      <StyledText onClick={handleClickClear}>Clear Completed</StyledText>
     </StyledWrapper>
   );
 };

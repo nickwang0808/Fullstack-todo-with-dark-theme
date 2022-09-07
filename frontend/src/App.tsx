@@ -23,7 +23,14 @@ function App() {
             />
           );
         })}
-        <BottomActionBar />
+        <BottomActionBar
+          itemsCount={5}
+          handleClickAll={() => {}}
+          handleClickActive={() => {}}
+          handleClickComplete={() => {}}
+          handleClickClear={() => {}}
+          activeFilter="active"
+        />
       </Container>
     </Backdrop>
   );

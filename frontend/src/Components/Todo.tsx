@@ -8,7 +8,7 @@ const StyledWrapper = styled.div`
   align-items: center;
   background-color: ${(props) => props.theme.cardBg};
   gap: 16px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid ${({ theme }) => theme.cardSecondaryBg};
   height: 32px;
   padding: 8px 16px;
 `;
@@ -17,10 +17,11 @@ const StyledCheckbox = styled.input`
   accent-color: hsl(192, 100%, 67%);
 `;
 
-const StyledText = styled.div<{ strike: boolean }>`
+const StyledText = styled.div<{ completed: boolean }>`
   flex: 1;
-  text-decoration: ${({ strike }) => strike && "line-through"};
-  color: ${(props) => props.theme.primaryText};
+  text-decoration: ${({ completed }) => completed && "line-through"};
+  color: ${({ theme, completed }) =>
+    completed ? theme.secondaryText : theme.primaryText};
 `;
 
 interface ItemProps {
@@ -44,7 +45,7 @@ const Todo: FC<ItemProps> = ({
         onChange={({ target }) => handleComplete(target.checked)}
       />
 
-      <StyledText strike={completed} data-testid="todo-item">
+      <StyledText completed={completed} data-testid="todo-item">
         {value}
       </StyledText>
 

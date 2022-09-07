@@ -6,13 +6,14 @@ export interface Theme {
   cardBg: string;
   primaryText: string;
   secondaryText: string;
+  cardSecondaryBg: string;
 }
 
 export const lightTheme: Theme = {
   mode: "light",
-  mainBg: "hsl(0, 0%, 98%)",
-  cardBg: "hsl(236, 33%, 92%)",
-  // LightGrayishBlue: "hsl(233, 11%, 84%)",
+  mainBg: "hsl(236, 33%, 92%)",
+  cardBg: "hsl(0, 0%, 98%)",
+  cardSecondaryBg: "hsl(233, 11%, 84%)",
   secondaryText: "hsl(236, 9%, 61%)",
   primaryText: "hsl(235, 19%, 35%)",
 };
@@ -24,7 +25,7 @@ export const darkTheme: Theme = {
   primaryText: "hsl(234, 39%, 85%)",
   // LightGrayishBlueHover: "hsl(236, 33%, 92%)",
   secondaryText: "hsl(234, 11%, 52%)",
-  // VeryDarkGrayishBlue: "hsl(233, 14%, 35%)",
+  cardSecondaryBg: "hsl(233, 14%, 35%)",
   // VeryDarkGrayishBlue2: "hsl(237, 14%, 26%)",
 };
 

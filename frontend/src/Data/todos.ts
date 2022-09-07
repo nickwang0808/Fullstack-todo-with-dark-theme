@@ -1,7 +1,7 @@
 export const todos = [
   {
     name: "todo 1",
-    completed: false,
+    completed: true,
   },
   {
     name: "todo 2",

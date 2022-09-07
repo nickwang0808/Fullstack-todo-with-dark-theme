@@ -12,7 +12,7 @@ const Row = styled.div`
 `;
 
 const StyledH1 = styled.h1`
-  color: ${(props) => props.theme.mainBg};
+  color: white;
 `;
 
 const TitleRow = () => {
