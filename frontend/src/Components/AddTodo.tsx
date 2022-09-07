@@ -6,6 +6,9 @@ const Wrapper = styled.div`
   align-items: center;
   background-color: ${(props) => props.theme.cardBg};
   gap: 16px;
+  margin-bottom: 16px;
+  height: 32px;
+  padding: 8px 16px;
 `;
 
 const CheckBox = styled.input``;
@@ -15,6 +18,7 @@ const TextBox = styled.input`
   outline: none;
   background-color: ${(props) => props.theme.cardBg};
   color: ${(props) => props.theme.primaryText};
+  height: 16px;
 `;
 
 const AddTodo: FC = () => {

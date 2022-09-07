@@ -3,7 +3,10 @@ import styled from "styled-components";
 const StyledWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: ${(props) => props.theme.cardBg};
+  height: 32px;
+  padding: 8px 16px;
 `;
 
 const StyledBaseText = styled.div`

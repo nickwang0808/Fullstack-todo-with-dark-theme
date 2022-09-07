@@ -9,6 +9,8 @@ const StyledWrapper = styled.div`
   background-color: ${(props) => props.theme.cardBg};
   gap: 16px;
   border-bottom: 1px solid black;
+  height: 32px;
+  padding: 8px 16px;
 `;
 
 const StyledCheckbox = styled.input`
