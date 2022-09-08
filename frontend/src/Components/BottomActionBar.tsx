@@ -22,7 +22,8 @@ const StyledText = styled(StyledBaseText)<{ active?: boolean }>`
   ${({ active }) => active && "color: blue"};
 `;
 
-type activeFilter = "all" | "active" | "completedd";
+export type activeFilter = "all" | "active" | "completed";
+
 interface BottomActionBarProps {
   itemsCount: number;
   activeFilter: activeFilter;
@@ -55,7 +56,7 @@ const BottomActionBar: FC<BottomActionBarProps> = ({
         </StyledText>
         <StyledText
           onClick={handleClickComplete}
-          active={activeFilter === "completedd"}
+          active={activeFilter === "completed"}
         >
           Completed
         </StyledText>

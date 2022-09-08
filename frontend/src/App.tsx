@@ -1,18 +1,26 @@
+import { useMemo, useState } from "react";
 import AddTodo from "./Components/AddTodo";
 import { Backdrop } from "./Components/Backdrop";
-import BottomActionBar from "./Components/BottomActionBar";
+import BottomActionBar, { activeFilter } from "./Components/BottomActionBar";
 import { Container } from "./Components/Container";
 import TitleRow from "./Components/TitleRow";
 import Todo from "./Components/Todo";
-import { todos } from "./Data/todos";
+import { dummyTodos } from "./Data/todos";
+import { filterBy } from "./Utils";
 
 function App() {
+  const [filter, setFilter] = useState<activeFilter>("all");
+
+  const [todos, setTodos] = useState(dummyTodos);
+
+  const todosFilterd = useMemo(() => filterBy(filter, todos), [filter, todos]);
+
   return (
     <Backdrop>
       <Container>
         <TitleRow />
         <AddTodo />
-        {todos.map(({ name, completed }) => {
+        {todosFilterd.map(({ name, completed }) => {
           return (
             <Todo
               key={name}
@@ -24,12 +32,12 @@ function App() {
           );
         })}
         <BottomActionBar
-          itemsCount={5}
-          handleClickAll={() => {}}
-          handleClickActive={() => {}}
-          handleClickComplete={() => {}}
+          itemsCount={todosFilterd.length}
+          handleClickAll={() => setFilter("all")}
+          handleClickActive={() => setFilter("active")}
+          handleClickComplete={() => setFilter("completed")}
           handleClickClear={() => {}}
-          activeFilter="active"
+          activeFilter={filter}
         />
       </Container>
     </Backdrop>
