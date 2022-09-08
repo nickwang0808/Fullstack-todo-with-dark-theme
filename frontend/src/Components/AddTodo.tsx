@@ -19,6 +19,7 @@ const TextBox = styled.input`
   background-color: ${(props) => props.theme.cardBg};
   color: ${(props) => props.theme.primaryText};
   height: 16px;
+  width: 100%;
 `;
 
 const AddTodo: FC = () => {
