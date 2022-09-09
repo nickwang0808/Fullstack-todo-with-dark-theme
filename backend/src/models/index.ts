@@ -1,13 +1,28 @@
-import { Sequelize } from "sequelize";
+import { Sequelize } from "sequelize-typescript";
+import _config from "../config/config";
+import Todo from "./Todo";
+const env = process.env.NODE_ENV || "development";
 
-// in a prod env we will use a env var
+// @ts-ignore
+const config = _config[env];
 
-export let sequelize = new Sequelize("sqlite::memory:");
-if (process.env.NODE_ENV !== "test") {
-  sequelize = new Sequelize({
-    dialect: "sqlite",
-    storage: "data/database.sqlite",
-  });
+let sequelize: Sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(
+    process.env[config.use_env_variable] as string,
+    config
+  );
+} else {
+  sequelize = new Sequelize(
+    config.database,
+    config.username,
+    config.password,
+    config
+  );
 }
 
-sequelize.sync();
+sequelize.addModels([Todo]);
+
+sequelize.sync({ force: true });
+
+export { sequelize, Todo };

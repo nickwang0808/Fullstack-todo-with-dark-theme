@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import { body, check, validationResult } from "express-validator";
-import Todo from "../models/todo";
+import { Todo } from "../models";
 
 const router = express.Router();
 

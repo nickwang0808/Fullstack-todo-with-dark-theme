@@ -1,6 +1,6 @@
 import request from "supertest";
 import { app } from "..";
-import Todo from "../models/todo";
+import Todo from "../models";
 
 describe("Todo routes should work", () => {
   beforeAll(() => {
