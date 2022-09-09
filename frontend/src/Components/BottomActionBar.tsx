@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 import styled from "styled-components";
 import useWindowDimensions from "../Utils/useScreenSize";
 
@@ -44,40 +44,29 @@ const BottomActionBar: FC<BottomActionBarProps> = ({
 }) => {
   const windowDimension = useWindowDimensions();
 
-  if (windowDimension.width < 700) {
+  const ActionControlBar: FC<PropsWithChildren> = ({ children }) => {
     return (
-      <>
-        <StyledWrapper style={{ marginTop: 0 }}>
-          <StyledBaseText>{itemsCount} item left</StyledBaseText>
-          <StyledText onClick={handleClickClear}>Clear Completed</StyledText>
-        </StyledWrapper>
-        <StyledWrapper
-          style={{ gap: 16, justifyContent: "center", marginTop: 16 }}
-        >
-          <StyledText onClick={handleClickAll} active={activeFilter === "all"}>
-            All
-          </StyledText>
-          <StyledText
-            onClick={handleClickActive}
-            active={activeFilter === "active"}
-          >
-            Active
-          </StyledText>
-          <StyledText
-            onClick={handleClickComplete}
-            active={activeFilter === "completed"}
-          >
-            Completed
-          </StyledText>
-        </StyledWrapper>
-      </>
+      <StyledWrapper style={{ marginTop: 0 }}>
+        <StyledBaseText data-testid="item-counter">
+          {itemsCount} item left
+        </StyledBaseText>
+        {children}
+        <StyledText onClick={handleClickClear}>Clear Completed</StyledText>
+      </StyledWrapper>
     );
-  }
+  };
 
-  return (
-    <StyledWrapper>
-      <StyledBaseText>{itemsCount} item left</StyledBaseText>
-      <StyledWrapper style={{ gap: 16 }}>
+  const FIlterControlBar: FC<{ isSerperate: boolean }> = ({ isSerperate }) => {
+    const wrapperStyleAddon = isSerperate
+      ? {
+          justifyContent: "center",
+          marginTop: 16,
+          gap: 16,
+        }
+      : { gap: 16 };
+
+    return (
+      <StyledWrapper style={wrapperStyleAddon}>
         <StyledText onClick={handleClickAll} active={activeFilter === "all"}>
           All
         </StyledText>
@@ -94,8 +83,22 @@ const BottomActionBar: FC<BottomActionBarProps> = ({
           Completed
         </StyledText>
       </StyledWrapper>
-      <StyledText onClick={handleClickClear}>Clear Completed</StyledText>
-    </StyledWrapper>
+    );
+  };
+
+  if (windowDimension.width < 700) {
+    return (
+      <>
+        <ActionControlBar />
+        <FIlterControlBar isSerperate />
+      </>
+    );
+  }
+
+  return (
+    <ActionControlBar>
+      <FIlterControlBar isSerperate={false} />
+    </ActionControlBar>
   );
 };
 
