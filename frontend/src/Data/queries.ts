@@ -27,7 +27,7 @@ export const api = createApi({
       }),
       invalidatesTags: ["todo"],
     }),
-    deleteTodos: builder.mutation<string, { ids: string[] }>({
+    deleteTodos: builder.mutation<string, { ids: number[] }>({
       query: ({ ids }) => ({
         url: "/todos",
         method: "DELETE",

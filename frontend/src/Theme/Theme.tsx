@@ -33,7 +33,7 @@ export const GlobalStyles = createGlobalStyle`
   @font-face {
     font-family: Josefin Sans;
     src: url(https://fonts.google.com/specimen/Josefin+Sans);
-    font-weight: 400 700
+    font-weight: 400 700;
   }
   body {
     margin: 0;

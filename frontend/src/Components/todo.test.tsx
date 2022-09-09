@@ -1,21 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import AddTodo from "./AddTodo";
 import Todo from "./Todo";
-
-describe("Add todo component", () => {
-  it("should have input and disabled checkbox as title without checkBoxControl passed in", async () => {
-    render(<AddTodo handleAddNew={() => {}} />);
-
-    expect(screen.getByRole("checkbox")).not.toBeChecked();
-
-    const input = screen.getByRole("textbox");
-
-    await userEvent.type(input, "this is a title");
-
-    expect(input).toHaveValue("this is a title");
-  });
-});
 
 describe("Todo component", () => {
   it("should have not input as a item display and enabled checkbox", async () => {
