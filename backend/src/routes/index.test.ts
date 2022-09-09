@@ -26,6 +26,7 @@ describe("Todo routes should work", () => {
     expect(responsePost.status).toBe(200);
 
     expect(responseGet.body).toHaveLength(5);
+    expect(responseGet.body[4].completed).toBe(false);
   });
   test("POST with invalid input should return 400", async () => {
     const response = await request(app).post("/todo").send({
