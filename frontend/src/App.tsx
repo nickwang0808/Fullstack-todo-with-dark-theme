@@ -40,6 +40,12 @@ function App() {
     [filter, data]
   );
 
+  if (isLoading) {
+    // return loading view
+  }
+  if (isError) {
+    // return error view
+  }
   return (
     <Backdrop>
       <Container>
