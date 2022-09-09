@@ -8,7 +8,7 @@ const router = express.Router();
 router.get("/todos", async (req: Request, res: Response) => {
   try {
     const allTodos = await Todo.findAll();
-    res.json(allTodos);
+    res.status(200).json(allTodos);
   } catch (error) {
     console.error(error);
     return res.status(500).send("something went wrong on our end");
