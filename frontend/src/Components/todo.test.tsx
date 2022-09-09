@@ -5,7 +5,7 @@ import Todo from "./Todo";
 
 describe("Add todo component", () => {
   it("should have input and disabled checkbox as title without checkBoxControl passed in", async () => {
-    render(<AddTodo />);
+    render(<AddTodo handleAddNew={() => {}} />);
 
     expect(screen.getByRole("checkbox")).not.toBeChecked();
 

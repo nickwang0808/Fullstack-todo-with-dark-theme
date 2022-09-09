@@ -1,7 +1,10 @@
 import { activeFilter } from "../Components/BottomActionBar";
-import { Todo } from "../Data/todos";
+import { Todo } from "../Data/types";
 
-export const filterBy = (type: activeFilter, todos: Todo[]): Todo[] => {
+export const filterBy = (
+  type: activeFilter,
+  todos: Required<Todo>[]
+): Required<Todo>[] => {
   switch (type) {
     case "all":
       return todos;

@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
 import App from "./App";
+import { store } from "./Data/queries";
 import reportWebVitals from "./reportWebVitals";
 import { CustomThemeProvider } from "./Theme/CustomThemeProvider";
 import { GlobalStyles } from "./Theme/Theme";
@@ -10,10 +12,12 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <CustomThemeProvider>
-      <GlobalStyles />
-      <App />
-    </CustomThemeProvider>
+    <Provider store={store}>
+      <CustomThemeProvider>
+        <GlobalStyles />
+        <App />
+      </CustomThemeProvider>
+    </Provider>
   </React.StrictMode>
 );
 

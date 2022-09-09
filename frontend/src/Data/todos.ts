@@ -1,8 +1,3 @@
-export interface Todo {
-  name: string;
-  completed: boolean;
-}
-
 export const dummyTodos = [
   {
     name: "todo 1",

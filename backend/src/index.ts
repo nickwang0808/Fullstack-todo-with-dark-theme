@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
 
-import { body, validationResult } from "express-validator";
+import { body, check, validationResult } from "express-validator";
 import Todo from "./models/todo";
 
 dotenv.config();
@@ -13,7 +13,7 @@ const port = process.env.PORT;
 
 app.use(cors());
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // in prod codebase we will be using cache like redis and use lazy loading caching strat to improve perf, here I'm gonna skip taht.
@@ -30,7 +30,6 @@ app.get("/todos", async (req: Request, res: Response) => {
 app.post(
   "/todo",
   body("name").isString(),
-  body("completed").isBoolean(),
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -40,7 +39,6 @@ app.post(
     try {
       const newTodo = await Todo.create({
         name: req.body.name,
-        completed: req.body.completed,
       });
       return res.status(200).json(newTodo);
     } catch (error) {
@@ -51,10 +49,12 @@ app.post(
 );
 
 app.patch(
-  "./todo",
+  "/todo",
   body("id").isUUID(),
   body("completed").isBoolean(),
   async (req: Request, res: Response) => {
+    console.log("patch");
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -75,7 +75,8 @@ app.patch(
 
 app.delete(
   "/todos",
-  body("ids").isArray().isUUID(),
+  body("ids").isArray(),
+  check("ids.*").isString(),
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

@@ -22,12 +22,25 @@ const TextBox = styled.input`
   width: 100%;
 `;
 
-const AddTodo: FC = () => {
+interface AddTodoProps {
+  handleAddNew: (todoName: string) => void;
+}
+
+const AddTodo: FC<AddTodoProps> = ({ handleAddNew }) => {
   const [value, setValue] = useState("");
 
   return (
     <Wrapper>
-      <CheckBox readOnly type="checkbox" checked={false} />
+      <CheckBox
+        readOnly
+        type="checkbox"
+        checked={false}
+        onClick={() => {
+          if (value) {
+            handleAddNew(value);
+          }
+        }}
+      />
 
       <TextBox
         type="text"

@@ -5,29 +5,56 @@ import BottomActionBar, { activeFilter } from "./Components/BottomActionBar";
 import { Container } from "./Components/Container";
 import TitleRow from "./Components/TitleRow";
 import Todo from "./Components/Todo";
-import { dummyTodos } from "./Data/todos";
+import {
+  useDeleteTodosMutation,
+  useGetAllTodosQuery,
+  usePatchTodoMutation,
+  usePostTodoMutation,
+} from "./Data/queries";
 import { filterBy } from "./Utils";
 
 function App() {
   const [filter, setFilter] = useState<activeFilter>("all");
 
-  const [todos, setTodos] = useState(dummyTodos);
+  const { data, isLoading, isError } = useGetAllTodosQuery();
 
-  const todosFilterd = useMemo(() => filterBy(filter, todos), [filter, todos]);
+  const [addNewTodo] = usePostTodoMutation();
+
+  const [updateTodo] = usePatchTodoMutation();
+
+  const [deleteTodos] = useDeleteTodosMutation();
+
+  const handleAddNewTodo = async (value: string) => {
+    await addNewTodo({
+      name: value,
+    });
+  };
+
+  const handleClearCompleted = () => {
+    if (!data || data.length === 0) return;
+    deleteTodos({ ids: filterBy("completed", data).map((elem) => elem.id) });
+  };
+
+  const todosFilterd = useMemo(
+    () => filterBy(filter, data ?? []),
+    [filter, data]
+  );
 
   return (
     <Backdrop>
       <Container>
         <TitleRow />
-        <AddTodo />
-        {todosFilterd.map(({ name, completed }) => {
+        <AddTodo handleAddNew={(value) => handleAddNewTodo(value)} />
+        {todosFilterd.map(({ id, name, completed }) => {
           return (
             <Todo
-              key={name}
+              key={id}
               value={name}
               completed={completed}
-              handleComplete={() => {}}
-              handleDelete={() => {}}
+              handleComplete={(checked) =>
+                updateTodo({ id, completed: checked })
+              }
+              handleDelete={() => deleteTodos({ ids: [id] })}
             />
           );
         })}
@@ -36,7 +63,7 @@ function App() {
           handleClickAll={() => setFilter("all")}
           handleClickActive={() => setFilter("active")}
           handleClickComplete={() => setFilter("completed")}
-          handleClickClear={() => {}}
+          handleClickClear={handleClearCompleted}
           activeFilter={filter}
         />
       </Container>
