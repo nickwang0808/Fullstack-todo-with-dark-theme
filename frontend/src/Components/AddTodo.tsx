@@ -35,15 +35,15 @@ interface AddTodoProps {
 const AddTodo: FC<AddTodoProps> = ({ handleAddNew }) => {
   const [value, setValue] = useState("");
 
+  const handleSubmit = () => {
+    if (value) {
+      handleAddNew(value);
+    }
+  };
+
   return (
     <Wrapper>
-      <StyledIcon
-        onClick={() => {
-          if (value) {
-            handleAddNew(value);
-          }
-        }}
-      />
+      <StyledIcon onClick={handleSubmit} />
 
       <TextBox
         type="text"
