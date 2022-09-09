@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
 
 import { body, validationResult } from "express-validator";
-import Todo from "./Models/todo";
+import Todo from "./models/todo";
 
 dotenv.config();
 
@@ -13,13 +13,18 @@ const port = process.env.PORT;
 
 app.use(cors());
 
-// Configuring body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// in prod codebase we will be using cache like redis and use lazy loading caching strat to improve perf, here I'm gonna skip taht.
 app.get("/todos", async (req: Request, res: Response) => {
-  const allTodos = await Todo.findAll();
-  res.json(allTodos);
+  try {
+    const allTodos = await Todo.findAll();
+    res.json(allTodos);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("something went wrong on our end");
+  }
 });
 
 app.post(
@@ -32,12 +37,16 @@ app.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const newTodo = await Todo.create({
-      name: req.body.name,
-      completed: req.body.completed,
-    });
-
-    res.status(200).json(newTodo);
+    try {
+      const newTodo = await Todo.create({
+        name: req.body.name,
+        completed: req.body.completed,
+      });
+      return res.status(200).json(newTodo);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send("something went wrong on our end");
+    }
   }
 );
 
@@ -51,11 +60,16 @@ app.patch(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const updatedTodo = await Todo.update(
-      { completed: req.body.completed },
-      { where: { id: req.body.id } }
-    );
-    return res.status(200).json(updatedTodo);
+    try {
+      const updatedTodo = await Todo.update(
+        { completed: req.body.completed },
+        { where: { id: req.body.id } }
+      );
+      return res.status(200).json(updatedTodo);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send("something went wrong on our end");
+    }
   }
 );
 
@@ -68,8 +82,13 @@ app.delete(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const updatedTodo = await Todo.destroy({ where: { id: req.body.ids } });
-    return res.status(200).send("delete successful");
+    try {
+      await Todo.destroy({ where: { id: req.body.ids } });
+      return res.status(200).send("delete successful");
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send("something went wrong on our end");
+    }
   }
 );
 
