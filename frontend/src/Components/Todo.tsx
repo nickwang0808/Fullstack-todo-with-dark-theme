@@ -2,6 +2,7 @@ import { FC } from "react";
 import styled from "styled-components";
 
 import { ReactComponent as Cross } from "../Assets/icon-cross.svg";
+import CustomCheckBox from "./CustomCheckBox";
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -39,17 +40,20 @@ const Todo: FC<ItemProps> = ({
 }) => {
   return (
     <StyledWrapper>
-      <StyledCheckbox
-        type="checkbox"
+      <CustomCheckBox
         checked={completed}
-        onChange={({ target }) => handleComplete(target.checked)}
+        onChange={(checked) => handleComplete(checked)}
       />
 
       <StyledText completed={completed} data-testid="todo-item">
         {value}
       </StyledText>
 
-      <Cross data-testid="icon-cross" onClick={handleDelete} />
+      <Cross
+        style={{ cursor: "pointer" }}
+        data-testid="icon-cross"
+        onClick={handleDelete}
+      />
     </StyledWrapper>
   );
 };
