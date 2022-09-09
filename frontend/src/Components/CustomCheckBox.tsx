@@ -50,7 +50,6 @@ interface CustomCheckBoxProps {
 
 const CustomCheckBox: FC<CustomCheckBoxProps> = ({ checked, onChange }) => (
   <CheckboxContainer onClick={() => onChange(!checked)}>
-    {/* @ts-ignore */}
     <HiddenCheckbox checked={checked ?? false} />
     <StyledCheckbox checked={checked ?? false}>
       <CheckMark style={{ visibility: checked ? "visible" : "hidden" }} />

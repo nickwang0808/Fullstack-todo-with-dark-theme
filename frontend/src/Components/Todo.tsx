@@ -14,10 +14,6 @@ const StyledWrapper = styled.div`
   padding: 8px 16px;
 `;
 
-const StyledCheckbox = styled.input`
-  accent-color: hsl(192, 100%, 67%);
-`;
-
 const StyledText = styled.div<{ completed: boolean }>`
   flex: 1;
   text-decoration: ${({ completed }) => completed && "line-through"};
