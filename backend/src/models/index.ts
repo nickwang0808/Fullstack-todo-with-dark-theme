@@ -23,6 +23,6 @@ if (config.use_env_variable) {
 
 sequelize.addModels([Todo]);
 
-sequelize.sync({ force: true });
+sequelize.sync();
 
 export { sequelize, Todo };

@@ -38,7 +38,7 @@ router.post(
 
 router.patch(
   "/todo",
-  body("id").isUUID(),
+  body("id").isInt(),
   body("completed").isBoolean(),
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
@@ -62,7 +62,7 @@ router.patch(
 router.delete(
   "/todos",
   body("ids").isArray(),
-  check("ids.*").isString(),
+  check("ids.*").isInt(),
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
