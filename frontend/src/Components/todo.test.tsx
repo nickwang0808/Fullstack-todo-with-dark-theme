@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Todo from "./Todo";
+import TodoItem from "./Todo";
 
 describe("Todo component", () => {
   it("should have not input as a item display and enabled checkbox", async () => {
@@ -8,7 +8,7 @@ describe("Todo component", () => {
     const mockDelete = jest.fn();
 
     render(
-      <Todo
+      <TodoItem
         value="todo 1"
         completed={false}
         handleComplete={mockComplete}
@@ -30,7 +30,7 @@ describe("Todo component", () => {
     const mockDelete = jest.fn();
 
     render(
-      <Todo
+      <TodoItem
         value="todo 1"
         completed={true}
         handleComplete={mockComplete}

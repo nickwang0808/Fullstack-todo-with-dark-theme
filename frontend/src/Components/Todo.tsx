@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { forwardRef } from "react";
 import styled from "styled-components";
 
 import { ReactComponent as Cross } from "../Assets/icon-cross.svg";
@@ -28,30 +28,27 @@ interface ItemProps {
   handleDelete: () => void;
 }
 
-const Todo: FC<ItemProps> = ({
-  completed,
-  handleComplete,
-  value,
-  handleDelete,
-}) => {
-  return (
-    <StyledWrapper>
-      <CustomCheckBox
-        checked={completed}
-        onChange={(checked) => handleComplete(checked)}
-      />
+const TodoItem = forwardRef<any, ItemProps>(
+  ({ completed, handleComplete, value, handleDelete, ...props }, ref) => {
+    return (
+      <StyledWrapper {...props} ref={ref}>
+        <CustomCheckBox
+          checked={completed}
+          onChange={(checked) => handleComplete(checked)}
+        />
 
-      <StyledText completed={completed} data-testid="todo-item">
-        {value}
-      </StyledText>
+        <StyledText completed={completed} data-testid="todo-item">
+          {value}
+        </StyledText>
 
-      <Cross
-        style={{ cursor: "pointer" }}
-        data-testid="icon-cross"
-        onClick={handleDelete}
-      />
-    </StyledWrapper>
-  );
-};
+        <Cross
+          style={{ cursor: "pointer" }}
+          data-testid="icon-cross"
+          onClick={handleDelete}
+        />
+      </StyledWrapper>
+    );
+  }
+);
 
-export default Todo;
+export default TodoItem;

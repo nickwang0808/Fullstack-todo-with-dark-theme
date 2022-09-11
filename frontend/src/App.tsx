@@ -1,17 +1,17 @@
 import { useMemo, useState } from "react";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import AddTodo from "./Components/AddTodo";
 import { Backdrop } from "./Components/Backdrop";
 import BottomActionBar, { activeFilter } from "./Components/BottomActionBar";
 import { Container } from "./Components/Container";
 import TitleRow from "./Components/TitleRow";
-import Todo from "./Components/Todo";
 import {
   useDeleteTodosMutation,
   useGetAllTodosQuery,
-  usePatchTodoMutation,
   usePostTodoMutation,
 } from "./Data/queries";
 import { filterBy } from "./Utils";
+import Todos from "./Views/Todos";
 
 function App() {
   const [filter, setFilter] = useState<activeFilter>("all");
@@ -19,8 +19,6 @@ function App() {
   const { data, isLoading, isError } = useGetAllTodosQuery();
 
   const [addNewTodo] = usePostTodoMutation();
-
-  const [updateTodo] = usePatchTodoMutation();
 
   const [deleteTodos] = useDeleteTodosMutation();
 
@@ -51,19 +49,18 @@ function App() {
       <Container>
         <TitleRow />
         <AddTodo handleAddNew={(value) => handleAddNewTodo(value)} />
-        {todosFilterd.map(({ id, name, completed }) => {
-          return (
-            <Todo
-              key={id}
-              value={name}
-              completed={completed}
-              handleComplete={(checked) =>
-                updateTodo({ id, completed: checked })
-              }
-              handleDelete={() => deleteTodos({ ids: [id] })}
-            />
-          );
-        })}
+
+        <DragDropContext onDragEnd={() => console.log("drag end")}>
+          <Droppable droppableId="list">
+            {(provided) => (
+              <div ref={provided.innerRef} {...provided.droppableProps}>
+                <Todos todos={todosFilterd} />
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+
         <BottomActionBar
           itemsCount={todosFilterd.length}
           handleClickAll={() => setFilter("all")}
