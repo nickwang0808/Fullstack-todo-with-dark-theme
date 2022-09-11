@@ -55,7 +55,7 @@ router.patch(
     try {
       await Promise.all(
         (req.body as Todo[]).map(async ({ completed, id, order }) => {
-          if (order) {
+          if (order != null) {
             await Todo.update({ completed, order }, { where: { id } });
           } else {
             await Todo.update({ completed }, { where: { id } });
