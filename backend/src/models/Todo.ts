@@ -9,6 +9,9 @@ class Todo extends Model {
   @Default(false)
   @Column
   completed: boolean;
+
+  @Column
+  order: number;
 }
 
 export default Todo;

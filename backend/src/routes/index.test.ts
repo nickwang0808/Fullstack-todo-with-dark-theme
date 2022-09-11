@@ -16,7 +16,7 @@ describe("Todo routes should work", () => {
     expect(response.body).toHaveLength(4);
   });
   test("POST with valid input should return 200, and add a new record", async () => {
-    const responsePost = await await request(app).post("/todo").send({
+    const responsePost = await await request(app).post("/todos").send({
       name: "test 5",
     });
     const responseGet = await request(app).get("/todos");
@@ -27,9 +27,10 @@ describe("Todo routes should work", () => {
 
     expect(responseGet.body).toHaveLength(5);
     expect(responseGet.body[4].completed).toBe(false);
+    expect(responseGet.body[4].order).toBe(4);
   });
   test("POST with invalid input should return 400", async () => {
-    const response = await request(app).post("/todo").send({
+    const response = await request(app).post("/todos").send({
       notName: "test 5",
     });
     expect(response.status).toBe(400);
@@ -40,18 +41,29 @@ describe("Todo routes should work", () => {
     const { id } = responseGet1.body[0];
     expect(id).toBeDefined();
 
-    const responsePatch = await request(app).patch("/todo").send({
-      id,
-      completed: true,
-    });
+    const responsePatch = await request(app)
+      .patch("/todos")
+      .send([
+        {
+          id,
+          completed: true,
+          order: 10,
+        },
+      ]);
     expect(responsePatch.status).toBe(200);
     const responseGet2 = await request(app).get("/todos");
     expect(responseGet2.body[0]?.completed).toBe(true);
+
+    expect(responseGet2.body[responseGet2.body.length - 1]?.order).toBe(10);
   });
   test("PATCH with invalid input should return 400", async () => {
-    const response = await request(app).patch("/todo").send({
-      notName: "test 5",
-    });
+    const response = await request(app)
+      .patch("/todos")
+      .send([
+        {
+          notName: "test 5",
+        },
+      ]);
     expect(response.status).toBe(400);
   });
   test("Delete with invalid input should return 400", async () => {
@@ -83,18 +95,22 @@ async function seedDb() {
     {
       name: "todo 1",
       completed: true,
+      order: 0,
     },
     {
       name: "todo 2",
       completed: true,
+      order: 1,
     },
     {
       name: "todo 3",
       completed: false,
+      order: 2,
     },
     {
       name: "todo 4",
       completed: false,
+      order: 3,
     },
   ]);
 }

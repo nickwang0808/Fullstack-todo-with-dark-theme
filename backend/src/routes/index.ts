@@ -7,7 +7,9 @@ const router = express.Router();
 // in prod codebase we will be using cache like redis and use lazy loading caching strat to improve perf, here I'm gonna skip taht.
 router.get("/todos", async (req: Request, res: Response) => {
   try {
-    const allTodos = await Todo.findAll();
+    const allTodos = await await Todo.findAll({
+      order: [["order", "ASC"]],
+    });
     res.status(200).json(allTodos);
   } catch (error) {
     console.error(error);
@@ -16,7 +18,7 @@ router.get("/todos", async (req: Request, res: Response) => {
 });
 
 router.post(
-  "/todo",
+  "/todos",
   body("name").isString(),
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
@@ -25,8 +27,11 @@ router.post(
     }
 
     try {
+      const todoCounts = await Todo.count();
+
       const newTodo = await Todo.create({
         name: req.body.name,
+        order: todoCounts,
       });
       return res.status(200).json(newTodo);
     } catch (error) {
@@ -37,9 +42,10 @@ router.post(
 );
 
 router.patch(
-  "/todo",
-  body("id").isInt(),
-  body("completed").isBoolean(),
+  "/todos",
+  body("*.id").isInt(),
+  body("*.completed").isBoolean(),
+  body("*.order").isInt().optional({ nullable: true }),
   async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -47,11 +53,16 @@ router.patch(
     }
 
     try {
-      const updatedTodo = await Todo.update(
-        { completed: req.body.completed },
-        { where: { id: req.body.id } }
+      await Promise.all(
+        (req.body as Todo[]).map(async ({ completed, id, order }) => {
+          if (order) {
+            await Todo.update({ completed, order }, { where: { id } });
+          } else {
+            await Todo.update({ completed }, { where: { id } });
+          }
+        })
       );
-      return res.status(200).json(updatedTodo);
+      return res.status(200).send("update successful");
     } catch (error) {
       console.error(error);
       return res.status(500).send("something went wrong on our end");

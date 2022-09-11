@@ -8,12 +8,12 @@ export const api = createApi({
   tagTypes: ["todo"],
   endpoints: (builder) => ({
     getAllTodos: builder.query<Required<Todo>[], void>({
-      query: () => `todos/`,
+      query: () => `/todos`,
       providesTags: ["todo"],
     }),
     postTodo: builder.mutation<Required<Todo>, Todo>({
       query: ({ id, ...rest }) => ({
-        url: "/todo",
+        url: "/todos",
         method: "POST",
         body: rest,
       }),
@@ -21,7 +21,7 @@ export const api = createApi({
     }),
     patchTodo: builder.mutation<string, Omit<Required<Todo>, "name">>({
       query: ({ id, completed }) => ({
-        url: "/todo",
+        url: "/todos",
         method: "PATCH",
         body: { id, completed },
       }),

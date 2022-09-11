@@ -6,7 +6,7 @@ const config = {
   test: {
     dialect: "sqlite",
     storage: ":memory:",
-    logging: false,
+    logging: true,
   },
   production: {
     username: "root",
