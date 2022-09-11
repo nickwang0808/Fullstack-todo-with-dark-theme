@@ -19,28 +19,34 @@ export const api = createApi({
       }),
       invalidatesTags: ["todo"],
     }),
-    patchTodo: builder.mutation<string, PatchArg[]>({
-      query: (args) => ({
+    patchTodo: builder.mutation<
+      string,
+      { todos: PatchArg[]; optimistic?: boolean }
+    >({
+      query: ({ todos }) => ({
         url: "/todos",
         method: "PATCH",
-        body: args,
+        body: todos,
       }),
       invalidatesTags: ["todo"],
-      async onQueryStarted(args, { dispatch, queryFulfilled }) {
-        console.log("optimistic");
-
-        dispatch(
-          api.util.updateQueryData("getAllTodos", undefined, (draft) => {
-            return args.map((arg) => {
-              const name = draft.find((elem) => elem.id === arg.id)?.name!;
-              return { ...arg, name, order: arg.order! };
-            });
-          })
-        );
-        try {
-          await queryFulfilled;
-        } catch {
-          dispatch(api.util.invalidateTags(["todo"]));
+      async onQueryStarted(
+        { todos, optimistic },
+        { dispatch, queryFulfilled }
+      ) {
+        if (optimistic) {
+          dispatch(
+            api.util.updateQueryData("getAllTodos", undefined, (draft) => {
+              return todos.map((arg) => {
+                const name = draft.find((elem) => elem.id === arg.id)?.name!;
+                return { ...arg, name, order: arg.order! };
+              });
+            })
+          );
+          try {
+            await queryFulfilled;
+          } catch {
+            dispatch(api.util.invalidateTags(["todo"]));
+          }
         }
       },
     }),

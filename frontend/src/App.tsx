@@ -52,7 +52,7 @@ function App() {
       result.destination.index
     ).map((elem, index) => ({ ...elem, order: index }));
 
-    updateTodos(newOrderedTodos);
+    updateTodos({ todos: newOrderedTodos, optimistic: true });
   };
 
   const todosFilterd = useMemo(

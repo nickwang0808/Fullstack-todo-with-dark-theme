@@ -23,7 +23,7 @@ const Todos: FC<TodosProps> = ({ todos }) => {
                 value={name}
                 completed={completed}
                 handleComplete={(checked) =>
-                  updateTodo([{ id, completed: checked }])
+                  updateTodo({ todos: [{ id, completed: checked }] })
                 }
                 handleDelete={() => deleteTodos({ ids: [id] })}
                 ref={provided.innerRef}
