@@ -49,9 +49,9 @@ function App() {
       data,
       result.source.index,
       result.destination.index
-    );
+    ).map((elem, index) => ({ ...elem, order: index }));
 
-    updateTodos(newOrderedTodos.map(({ name, ...rest }) => ({ ...rest })));
+    updateTodos(newOrderedTodos);
   };
 
   const todosFilterd = useMemo(

@@ -26,6 +26,23 @@ export const api = createApi({
         body: args,
       }),
       invalidatesTags: ["todo"],
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        console.log("optimistic");
+
+        dispatch(
+          api.util.updateQueryData("getAllTodos", undefined, (draft) => {
+            return args.map((arg) => {
+              const name = draft.find((elem) => elem.id === arg.id)?.name!;
+              return { ...arg, name, order: arg.order! };
+            });
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          dispatch(api.util.invalidateTags(["todo"]));
+        }
+      },
     }),
     deleteTodos: builder.mutation<string, { ids: number[] }>({
       query: ({ ids }) => ({
