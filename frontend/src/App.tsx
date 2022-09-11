@@ -4,6 +4,7 @@ import AddTodo from "./Components/AddTodo";
 import { Backdrop } from "./Components/Backdrop";
 import BottomActionBar, { activeFilter } from "./Components/BottomActionBar";
 import { Container } from "./Components/Container";
+import { StyledHint } from "./Components/hint";
 import TitleRow from "./Components/TitleRow";
 import {
   useDeleteTodosMutation,
@@ -90,6 +91,8 @@ function App() {
           handleClickClear={handleClearCompleted}
           activeFilter={filter}
         />
+
+        <StyledHint>Drag and drop to reorder list</StyledHint>
       </Container>
     </Backdrop>
   );
