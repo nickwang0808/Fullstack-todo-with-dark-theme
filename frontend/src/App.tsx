@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import AddTodo from "./Components/AddTodo";
 import { Backdrop } from "./Components/Backdrop";
 import BottomActionBar, { activeFilter } from "./Components/BottomActionBar";
@@ -8,9 +8,10 @@ import TitleRow from "./Components/TitleRow";
 import {
   useDeleteTodosMutation,
   useGetAllTodosQuery,
+  usePatchTodoMutation,
   usePostTodoMutation,
 } from "./Data/queries";
-import { filterBy } from "./Utils";
+import { filterBy, reorder } from "./Utils";
 import Todos from "./Views/Todos";
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
   const { data, isLoading, isError } = useGetAllTodosQuery();
 
   const [addNewTodo] = usePostTodoMutation();
+
+  const [updateTodos] = usePatchTodoMutation();
 
   const [deleteTodos] = useDeleteTodosMutation();
 
@@ -31,6 +34,24 @@ function App() {
   const handleClearCompleted = () => {
     if (!data || data.length === 0) return;
     deleteTodos({ ids: filterBy("completed", data).map((elem) => elem.id) });
+  };
+
+  const handleDragEnd = (result: DropResult) => {
+    if (!result.destination || !data) {
+      return;
+    }
+
+    if (result.destination.index === result.source.index) {
+      return;
+    }
+
+    const newOrderedTodos = reorder(
+      data,
+      result.source.index,
+      result.destination.index
+    );
+
+    updateTodos(newOrderedTodos.map(({ name, ...rest }) => ({ ...rest })));
   };
 
   const todosFilterd = useMemo(
@@ -50,7 +71,7 @@ function App() {
         <TitleRow />
         <AddTodo handleAddNew={(value) => handleAddNewTodo(value)} />
 
-        <DragDropContext onDragEnd={() => console.log("drag end")}>
+        <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="list">
             {(provided) => (
               <div ref={provided.innerRef} {...provided.droppableProps}>

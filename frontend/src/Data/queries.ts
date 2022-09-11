@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Todo } from "./types";
+import { PatchArg, Todo } from "./types";
 
 export const api = createApi({
   reducerPath: "todosApi",
@@ -19,11 +19,11 @@ export const api = createApi({
       }),
       invalidatesTags: ["todo"],
     }),
-    patchTodo: builder.mutation<string, Omit<Required<Todo>, "name">>({
-      query: ({ id, completed }) => ({
+    patchTodo: builder.mutation<string, PatchArg[]>({
+      query: (args) => ({
         url: "/todos",
         method: "PATCH",
-        body: { id, completed },
+        body: args,
       }),
       invalidatesTags: ["todo"],
     }),
