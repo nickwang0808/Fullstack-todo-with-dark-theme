@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/Fullstack-todo-with-dark-theme/static/js/main.8650027b.js",
+    "main.js": "/Fullstack-todo-with-dark-theme/static/js/main.1d4872e1.js",
     "static/js/787.cda612ba.chunk.js": "/Fullstack-todo-with-dark-theme/static/js/787.cda612ba.chunk.js",
     "static/media/bg-desktop-light.jpg": "/Fullstack-todo-with-dark-theme/static/media/bg-desktop-light.3508d620efd5a52bb4ce.jpg",
     "static/media/bg-desktop-dark.jpg": "/Fullstack-todo-with-dark-theme/static/media/bg-desktop-dark.73e47dbb723ebc772ef0.jpg",
@@ -10,10 +10,10 @@
     "static/media/icon-cross.svg": "/Fullstack-todo-with-dark-theme/static/media/icon-cross.6ee81d30b75cab19d6f7314624fcc4d6.svg",
     "static/media/icon-plus.svg": "/Fullstack-todo-with-dark-theme/static/media/icon-plus.efad374aa801436f078910bba724af05.svg",
     "static/media/icon-check.svg": "/Fullstack-todo-with-dark-theme/static/media/icon-check.a8fb15d0278c8e312df5fc8364fef863.svg",
-    "main.8650027b.js.map": "/Fullstack-todo-with-dark-theme/static/js/main.8650027b.js.map",
+    "main.1d4872e1.js.map": "/Fullstack-todo-with-dark-theme/static/js/main.1d4872e1.js.map",
     "787.cda612ba.chunk.js.map": "/Fullstack-todo-with-dark-theme/static/js/787.cda612ba.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.8650027b.js"
+    "static/js/main.1d4872e1.js"
   ]
 }
