@@ -4,7 +4,10 @@ import { PatchArg, Todo } from "./types";
 
 export const api = createApi({
   reducerPath: "todosApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000" }),
+  // baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://fullstacktodobackend-dev.us-east-1.elasticbeanstalk.com",
+  }),
   tagTypes: ["todo"],
   endpoints: (builder) => ({
     getAllTodos: builder.query<Required<Todo>[], void>({

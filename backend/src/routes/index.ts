@@ -4,6 +4,10 @@ import { Todo } from "../models";
 
 const router = express.Router();
 
+router.get("/", (req: Request, res: Response) => {
+  return res.status(200).send("Root resource of the app");
+});
+
 // in prod codebase we will be using cache like redis and use lazy loading caching strat to improve perf, here I'm gonna skip taht.
 router.get("/todos", async (req: Request, res: Response) => {
   try {
