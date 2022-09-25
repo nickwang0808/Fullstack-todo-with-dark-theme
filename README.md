@@ -1,3 +1,5 @@
+[LIVE DEMO](https://nickwang0808.github.io/Fullstack-todo-with-dark-theme/)
+
 ### Objective
 
 Your challenge is to build out this full-stack todo app and get it looking as close to the design as possible.
@@ -10,29 +12,29 @@ Using any language or framework, your task is to build out the project to the de
 
 Your users should be able to:
 
--   Add new todos to the list
--   Mark todos as complete
--   Delete todos from the list
--   Filter by all/active/complete todos
--   Clear all completed todos
--   See hover states for all interactive elements on the page
--   **Bonus**: Toggle light and dark mode
--   **Bonus**: Drag and drop to reorder items on the list
+- Add new todos to the list
+- Mark todos as complete
+- Delete todos from the list
+- Filter by all/active/complete todos
+- Clear all completed todos
+- See hover states for all interactive elements on the page
+- **Bonus**: Toggle light and dark mode
+- **Bonus**: Drag and drop to reorder items on the list
 
 **Server Side**
 
--   Design a simple API for persisting state on the server side
--   Implement routes for all listed **CRUD** operations
--   No authentication / session management is required. Imagine you're building this application for a single user (yourself)
+- Design a simple API for persisting state on the server side
+- Implement routes for all listed **CRUD** operations
+- No authentication / session management is required. Imagine you're building this application for a single user (yourself)
 
 ### Evaluation Criteria
 
--   Show us your work through your commit history
--   We're looking for you to produce working code, with enough room to demonstrate how to structure components in a small program
--   Completeness: did you complete the features?
--   Correctness: does the functionality act in sensible, thought-out ways?
--   Maintainability: is it written in a clean, maintainable way?
--   Testing: is the system adequately tested?
+- Show us your work through your commit history
+- We're looking for you to produce working code, with enough room to demonstrate how to structure components in a small program
+- Completeness: did you complete the features?
+- Correctness: does the functionality act in sensible, thought-out ways?
+- Maintainability: is it written in a clean, maintainable way?
+- Testing: is the system adequately tested?
 
 ### CodeSubmit
 
